@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RUN2X - 공부일지</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  /* 기본 설정 및 헤더 스타일 */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background-color: #050505;
+    font-family: 'Inter', 'Noto Sans KR', sans-serif;
+    color: #E0E0E0;
+  }
+  header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 25px 50px; background: rgba(5, 5, 5, 0.85); 
+    border-bottom: 2px solid #FF2A2A; backdrop-filter: blur(5px); 
+  }
+  
+  .logo a {
+    font-family: 'Orbitron', sans-serif; font-size: 1.8rem;
+    font-weight: 900; letter-spacing: 2px; color: #FFFFFF; text-decoration: none;
+  }
+  
+  nav ul { display: flex; list-style: none; gap: 40px; }
+  nav ul li a {
+    text-decoration: none; color: #A0A0A0; font-size: 1.1rem;
+    font-weight: 500; transition: color 0.3s ease;
+  }
+  nav ul li a:hover { color: #FF2A2A; }
+
+  /* =========================================
+     공부일지 전용 콘텐츠 스타일
+     ========================================= */
+  .study-container {
+    max-width: 1000px;
+    margin: 60px auto;
+    padding: 0 20px;
+  }
+  .page-title {
+    font-size: 2rem; color: #FFFFFF; margin-bottom: 40px;
+    border-left: 5px solid #FF2A2A; padding-left: 15px; font-weight: 900;
+  }
+  
+  /* 개별 일지 박스 */
+  .log-item {
+    background-color: #111111;
+    border: 1px solid #222;
+    padding: 30px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  
+  .log-item:hover { 
+    transform: translateY(-5px); 
+    border-color: #FF2A2A; 
+  }
+  
+  /* 과목명 태그 및 날짜 */
+  .log-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  
+  .subject-tag {
+    background-color: #1E50A0;
+    color: #FFFFFF;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: bold;
+  }
+
+  .log-date { color: #FF2A2A; font-size: 0.95rem; font-weight: bold; }
+  .log-title { font-size: 1.4rem; color: #FFFFFF; margin-bottom: 15px; line-height: 1.4; }
+  .log-desc { color: #BBBBBB; line-height: 1.7; word-break: keep-all; }
+</style>
+</head>
+<body>
+
+  <!-- 상단 창(Header) -->
+  <header>
+    <div class="logo"><a href="index.html">FRAME</a></div>
+    <nav>
+      <ul>
+        <!-- 공부일지 메뉴 강조 -->
+        <li><a href="study.html" style="color: #FF2A2A;">공부일지</a></li>
+        <li><a href="working.html">작업일지</a></li>
+        <li><a href="#">FSK 대회 규정</a></li>
+        <li><a href="#">기타</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- 공부일지 콘텐츠 영역 -->
+  <main class="study-container">
+    <h2 class="page-title">공부일지 (Study Log)</h2>
+    
+    <!-- 첫 번째 공부일지 -->
+    <div class="log-item">
+      <div class="log-header">
+        <span class="subject-tag">일반물리학</span>
+        <span class="log-date">2026. 05. 20</span>
+      </div>
+      <h3 class="log-title">2차원 충돌 실험 데이터 분석 및 운동학 공식 적용</h3>
+      <p class="log-desc">
+        속도 도출 과정에서 v = v0 + gt 공식을 적용하여 계산을 진행함. 측정 및 계산 결과 작성 시 유효숫자 규칙을 철저하게 맞추어 오차를 방지함. 2차원 충돌의 경우 m<sub>1</sub>v<sub>1</sub> = m<sub>1</sub>v<sub>1</sub>' + m<sub>2</sub>v<sub>2</sub>' 식과 θ<sub>1</sub> + θ<sub>2</sub> = π/2 조건을 활용해 결과 분석 단락을 정리함.
+      </p>
+    </div>
+
+    <!-- 두 번째 공부일지 -->
+    <div class="log-item">
+      <div class="log-header">
+        <span class="subject-tag">화학 / 생성형AI</span>
+        <span class="log-date">2026. 05. 12</span>
+      </div>
+      <h3 class="log-title">기체의 법칙 실험 요약 및 프롬프트 최적화</h3>
+      <p class="log-desc">
+        실험 1(보일의 법칙)과 실험 2(샤를의 법칙)에 대한 세부 실험 방법을 정리하고, 해당 실험에서 특히 주의해야 할 안전 사항을 도출함. 보고서 분석 작성 시 교과서에 명시된 올바른 이론값을 기준으로 삼아 내용을 보강함.
+      </p>
+    </div>
+  </main>
+
+</body>
+</html>
