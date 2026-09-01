@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<!-- Quill 에디터 기본 CSS -->
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
 <style>
@@ -24,11 +25,9 @@
 
   .study-container { max-width: 1000px; margin: 60px auto; padding: 0 20px; }
   
-  /* 제목과 새글작성 버튼을 한 줄에 배치 */
   .title-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
   .page-title { font-size: 2rem; color: #FFFFFF; border-left: 5px solid #FF2A2A; padding-left: 15px; font-weight: 900; }
   
-  /* 글쓰기 토글 버튼 스타일 */
   .toggle-btn { background-color: #222; color: #E0E0E0; border: 1px solid #444; padding: 12px 25px; font-size: 1rem; font-weight: bold; border-radius: 4px; cursor: pointer; transition: all 0.3s; }
   .toggle-btn:hover { background-color: #FF2A2A; border-color: #FF2A2A; color: #FFF; }
   
@@ -38,15 +37,15 @@
   }
   .input-row { display: flex; gap: 15px; }
   
+  /* 에디터 스타일 설정 */
   .ql-toolbar.ql-snow { border: 1px solid #444 !important; background: #111; border-radius: 4px 4px 0 0; }
-  .ql-container.ql-snow { border: 1px solid #444 !important; border-top: none !important; height: 300px; border-radius: 0 0 4px 4px; font-family: inherit; font-size: 1rem; color: #FFF; margin-bottom: 15px; }
+  .ql-container.ql-snow { border: 1px solid #444 !important; border-top: none !important; height: 400px; border-radius: 0 0 4px 4px; font-family: inherit; font-size: 1rem; color: #FFF; margin-bottom: 15px; }
   .ql-snow .ql-stroke { stroke: #E0E0E0 !important; }
   .ql-snow .ql-fill, .ql-snow .ql-stroke.ql-fill { fill: #E0E0E0 !important; }
   .ql-snow .ql-picker { color: #E0E0E0 !important; }
+  .ql-snow .ql-picker-options { background-color: #222 !important; border-color: #444 !important; }
   
-  .submit-btn {
-    background-color: #FF2A2A; color: #FFF; border: none; padding: 12px 25px; font-size: 1rem; font-weight: bold; border-radius: 4px; cursor: pointer; transition: background 0.3s;
-  }
+  .submit-btn { background-color: #FF2A2A; color: #FFF; border: none; padding: 12px 25px; font-size: 1rem; font-weight: bold; border-radius: 4px; cursor: pointer; transition: background 0.3s; }
   .submit-btn:hover { background-color: #CC0000; }
   .submit-btn:disabled { background-color: #555; cursor: not-allowed; }
 
@@ -83,7 +82,6 @@
       <button id="toggleWriteBtn" class="toggle-btn">새 글 작성</button>
     </div>
     
-    <!-- 평소에는 숨겨져 있는 글쓰기 영역 -->
     <div class="write-box" id="writeBox" style="display: none;">
       <div class="input-row">
         <input type="text" id="authorInput" placeholder="작성자 이름">
@@ -101,7 +99,9 @@
     </div>
   </main>
 
+  <!-- Quill 에디터 및 이미지 크기 조절 모듈 불러오기 -->
   <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/quill-image-resize-script@1.2.8/image-resize.min.js"></script>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
@@ -121,7 +121,6 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // 새 글 작성 버튼 클릭 시 작동하는 토글 기능
     const toggleBtn = document.getElementById("toggleWriteBtn");
     const writeBox = document.getElementById("writeBox");
 
@@ -139,15 +138,21 @@
       }
     });
 
+    // Quill 에디터 세팅 (글자 크기, 색상, 사진 크기 조절 추가)
     const quill = new Quill('#editor', {
       theme: 'snow',
       placeholder: '공부한 내용과 사진을 자유롭게 입력하세요...',
       modules: {
+        imageResize: {
+          displaySize: true // 이미지 클릭 시 크기 조절 핸들러 표시
+        },
         toolbar: {
           container: [
-            ['bold', 'italic', 'underline', 'strike'],
-            ['image', 'link'],
-            [{ 'list': 'ordered'}, { 'list': 'bullet' }]
+            [{ 'size': ['small', false, 'large', 'huge'] }], // 글자 크기
+            [{ 'color': [] }, { 'background': [] }],       // 글자 색상, 배경색
+            ['bold', 'italic', 'underline', 'strike'],     // 굵기, 기울임 등
+            ['image', 'link'],                             // 이미지, 링크
+            [{ 'list': 'ordered'}, { 'list': 'bullet' }]   // 리스트
           ],
           handlers: { image: imageHandler }
         }
