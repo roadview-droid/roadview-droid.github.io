@@ -31,12 +31,12 @@
   .toggle-btn:hover { background-color: #FF2A2A; border-color: #FF2A2A; color: #FFF; }
   
   .write-box { background-color: #0A0A0A; border: 1px solid #333; padding: 25px; border-radius: 8px; margin-bottom: 40px; }
-  .write-box input[type="text"], .write-box input[type="date"] {
+  /* 비밀번호 입력칸 스타일 추가 */
+  .write-box input[type="text"], .write-box input[type="date"], .write-box input[type="password"] {
     width: 100%; background-color: #111; border: 1px solid #444; color: #FFF; padding: 12px; margin-bottom: 15px; border-radius: 4px; font-family: inherit;
   }
   .input-row { display: flex; gap: 15px; }
   
-  /* 에디터 다크모드 스타일 (색상 표시 오류 수정) */
   .ql-toolbar.ql-snow { border: 1px solid #444; background: #111; border-radius: 4px 4px 0 0; }
   .ql-container.ql-snow { border: 1px solid #444; border-top: none; height: 400px; border-radius: 0 0 4px 4px; font-family: inherit; font-size: 1rem; color: #FFF; margin-bottom: 15px; }
   .ql-snow .ql-stroke { stroke: #E0E0E0; }
@@ -82,9 +82,11 @@
     </div>
     
     <div class="write-box" id="writeBox" style="display: none;">
+      <!-- 작성자, 날짜 옆에 비밀번호 입력칸 추가 -->
       <div class="input-row">
         <input type="text" id="authorInput" placeholder="작성자 이름">
         <input type="date" id="dateInput">
+        <input type="password" id="passwordInput" placeholder="삭제용 비밀번호">
       </div>
       <input type="text" id="titleInput" placeholder="일지 제목을 입력하세요">
       
@@ -136,18 +138,15 @@
       }
     });
 
-    // 툴바 설정 (배경색 제거, 글자 색상만 유지)
     const quill = new Quill('#editor', {
       theme: 'snow',
       placeholder: '공부한 내용과 사진을 자유롭게 입력하세요...',
       modules: {
-        imageResize: {
-          displaySize: true
-        },
+        imageResize: { displaySize: true },
         toolbar: {
           container: [
             [{ 'size': ['small', false, 'large', 'huge'] }], 
-            [{ 'color': [] }],                             // 글자 색상만 남김
+            [{ 'color': [] }],                             
             ['bold', 'italic', 'underline', 'strike'],     
             ['image', 'link'],                             
             [{ 'list': 'ordered'}, { 'list': 'bullet' }]   
@@ -195,11 +194,13 @@
     document.getElementById("saveBtn").addEventListener("click", async () => {
       const author = document.getElementById("authorInput").value;
       const date = document.getElementById("dateInput").value;
+      const password = document.getElementById("passwordInput").value; // 비밀번호 값 가져오기
       const title = document.getElementById("titleInput").value;
       const descHTML = quill.root.innerHTML; 
       
-      if (!author || !date || !title || descHTML === '<p><br></p>') {
-        alert("내용을 모두 채워주세요!");
+      // 비밀번호 칸도 비어있으면 안 되도록 조건 추가
+      if (!author || !date || !password || !title || descHTML === '<p><br></p>') {
+        alert("비밀번호를 포함한 모든 내용을 채워주세요!");
         return;
       }
 
@@ -211,6 +212,7 @@
         await addDoc(collection(db, "studyLogs"), {
           author: author, 
           date: date, 
+          password: password, // 데이터베이스에 비밀번호 함께 저장
           title: title, 
           descHTML: descHTML, 
           timestamp: new Date()
@@ -237,11 +239,12 @@
           const data = docSnap.data();
           const docId = docSnap.id;
           
+          // 삭제 버튼에 해당 글의 비밀번호(data-pw)를 몰래 숨겨둡니다.
           const logHTML = `
             <div class="log-item">
               <div class="log-top-row">
                 <span class="log-date">${data.date}</span>
-                <button class="delete-btn" data-id="${docId}">삭제</button>
+                <button class="delete-btn" data-id="${docId}" data-pw="${data.password || ''}">삭제</button>
               </div>
               <h3 class="log-title">${data.title}</h3>
               <div class="log-author">작성자: ${data.author}</div>
@@ -256,14 +259,30 @@
     document.getElementById("logsContainer").addEventListener("click", async (e) => {
       if (e.target.classList.contains("delete-btn")) {
         const docId = e.target.getAttribute("data-id");
-        if (confirm("정말 이 일지를 삭제하시겠습니까?")) {
-          try {
-            await deleteDoc(doc(db, "studyLogs", docId));
-            alert("삭제되었습니다.");
-            window.location.reload(); 
-          } catch (error) {
-            alert("삭제 중 오류가 발생했습니다.");
+        const realPassword = e.target.getAttribute("data-pw"); // 저장된 진짜 비밀번호
+        
+        // 비밀번호가 설정된 글이라면 입력창을 띄워 확인
+        if (realPassword) {
+          const userInput = prompt("게시물을 삭제하려면 비밀번호를 입력하세요:");
+          
+          if (userInput === null) {
+            return; // 취소 버튼을 누른 경우 중단
           }
+          if (userInput !== realPassword) {
+            alert("비밀번호가 일치하지 않습니다.");
+            return; // 비밀번호가 틀린 경우 중단
+          }
+        } else {
+          // 예전에 작성되어 비밀번호가 없는 글 처리
+          if (!confirm("정말 이 일지를 삭제하시겠습니까?")) return;
+        }
+
+        try {
+          await deleteDoc(doc(db, "studyLogs", docId));
+          alert("삭제되었습니다.");
+          window.location.reload(); 
+        } catch (error) {
+          alert("삭제 중 오류가 발생했습니다.");
         }
       }
     });
