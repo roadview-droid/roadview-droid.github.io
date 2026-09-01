@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프레임 - RUN2X</title>
+    <style>
+        /* 기본 여백 제거 */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Malgun Gothic', sans-serif;
+        }
+
+        /* 상단 남색 공간 (헤더) */
+        .top-frame {
+            background-color: navy; /* 남색 배경 */
+            color: white;           /* 글씨는 잘 보이게 흰색으로 설정 */
+            padding: 20px;          /* 안쪽 여백 */
+            box-sizing: border-box;
+        }
+
+        /* '프레임' 텍스트 설정 */
+        .frame-text {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: left;       /* 왼쪽 정렬 (기본값) */
+        }
+
+        /* 하단 공간 */
+        .bottom-content {
+            padding: 50px 20px;
+            text-align: center;     /* 글씨를 가운데 배치하고 싶다면 유지, 왼쪽 배치 원하시면 left로 변경 */
+        }
+
+        /* 'RUN2X' 텍스트 설정 */
+        .run2x-text {
+            font-size: 48px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-frame">
+        <div class="frame-text">프레임</div>
+    </div>
+
+    <div class="bottom-content">
+        <div class="run2x-text">RUN2X</div>
+    </div>
+
+</body>
+</html>
