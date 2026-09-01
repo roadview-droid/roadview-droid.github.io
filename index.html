@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RUN2X Frame Part</title>
+
+<!-- ★ 레이싱/메카닉 느낌의 구글 폰트(Orbitron) 추가 ★ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+
 <style>
   /* 기본 설정 */
   * {
@@ -58,6 +64,7 @@
   }
 
   .logo {
+    font-family: 'Orbitron', sans-serif; /* 로고에도 레이싱 폰트 적용 */
     font-size: 1.8rem;
     font-weight: 900;
     letter-spacing: 2px;
@@ -93,6 +100,8 @@
 
   /* 중앙 RUN2X 텍스트 */
   .team-name {
+    font-family: 'Orbitron', sans-serif; /* ★ 자작자동차 느낌의 폰트 적용 ★ */
+    font-style: italic; /* ★ 속도감을 주기 위한 기울임 효과 ★ */
     font-size: 8rem;
     font-weight: 900;
     letter-spacing: 8px;
@@ -125,12 +134,12 @@
      ========================================= */
   .about-section {
     padding: 80px 10%;
-    background-color: #050505; /* 검은 배경 설정 */
+    background-color: #050505; 
     position: relative;
     z-index: 5;
   }
 
-  /* 섹션 제목 디자인 (이미지의 파란색 포인트 바 적용) */
+  /* 섹션 제목 디자인 */
   .section-title {
     font-size: 1.8rem;
     color: #FFFFFF;
@@ -152,7 +161,7 @@
     left: 0;
     width: 35px;
     height: 5px;
-    background-color: #1E50A0; /* 원본 이미지 느낌의 파란색 포인트 */
+    background-color: #1E50A0; 
   }
 
   /* 소개 텍스트 */
@@ -164,7 +173,7 @@
     margin-bottom: 20px;
   }
 
-  /* 수상기록 테이블 (다크모드 커스텀) */
+  /* 수상기록 테이블 */
   .history-table {
     width: 100%;
     border-collapse: collapse;
