@@ -43,8 +43,16 @@
   .log-item { background-color: #111111; border: 1px solid #222; padding: 30px; margin-bottom: 20px; border-radius: 8px; transition: transform 0.2s ease, border-color 0.2s ease; }
   .log-item:hover { transform: translateY(-5px); border-color: #FF2A2A; }
   .log-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  
   .subject-tag { background-color: #1E50A0; color: #FFFFFF; padding: 4px 12px; border-radius: 4px; font-size: 0.85rem; font-weight: bold; }
-  .log-date { color: #FF2A2A; font-size: 0.95rem; font-weight: bold; }
+  .log-date { color: #FF2A2A; font-size: 0.95rem; font-weight: bold; margin-left: 10px; }
+  
+  /* 삭제 버튼 스타일 */
+  .delete-btn {
+    background-color: transparent; color: #555; border: 1px solid #444; padding: 5px 12px; border-radius: 4px; font-size: 0.85rem; cursor: pointer; transition: all 0.2s ease;
+  }
+  .delete-btn:hover { background-color: #CC0000; color: #FFF; border-color: #CC0000; }
+
   .log-title { font-size: 1.4rem; color: #FFFFFF; margin-bottom: 15px; line-height: 1.4; }
   .log-desc { color: #BBBBBB; line-height: 1.7; word-break: keep-all; }
 </style>
@@ -85,11 +93,10 @@
 
   <!-- 파이어베이스 및 자바스크립트 로직 -->
   <script type="module">
-    // Firebase SDK 불러오기
+    // 삭제를 위한 deleteDoc, doc 함수 추가 수입
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, getDocs, orderBy, query, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
-    // 회원님의 Firebase 설정
     const firebaseConfig = {
       apiKey: "AIzaSyBQT5zq1Od_fEycSiAb9-Ne9a2FgEi5ITU",
       authDomain: "frame-0815.firebaseapp.com",
@@ -99,11 +106,10 @@
       appId: "1:855495504446:web:d46114e7a5606d8898d76f"
     };
 
-    // Firebase 초기화 및 DB 연결
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // 데이터 저장하기 (등록 버튼 클릭 시)
+    // 1. 데이터 저장 (기존과 동일)
     document.getElementById("saveBtn").addEventListener("click", async () => {
       const subject = document.getElementById("subjectInput").value;
       const date = document.getElementById("dateInput").value;
@@ -117,36 +123,37 @@
 
       try {
         await addDoc(collection(db, "studyLogs"), {
-          subject: subject,
-          date: date,
-          title: title,
-          desc: desc,
-          timestamp: new Date() // 정렬을 위한 시간 저장
+          subject: subject, date: date, title: title, desc: desc, timestamp: new Date()
         });
         alert("일지가 성공적으로 등록되었습니다!");
-        window.location.reload(); // 등록 후 페이지 새로고침
+        window.location.reload(); 
       } catch (e) {
         console.error("Error adding document: ", e);
         alert("등록 중 오류가 발생했습니다.");
       }
     });
 
-    // 데이터 불러오기 (페이지 로드 시)
+    // 2. 데이터 불러오기 (삭제 버튼과 고유 ID 부여)
     async function loadLogs() {
-      const q = query(collection(db, "studyLogs"), orderBy("timestamp", "desc")); // 최신순 정렬
+      const q = query(collection(db, "studyLogs"), orderBy("timestamp", "desc"));
       const querySnapshot = await getDocs(q);
       const container = document.getElementById("logsContainer");
       
       if (!querySnapshot.empty) {
-        container.innerHTML = ""; // 기존 로딩 메시지 지우기
-        querySnapshot.forEach((doc) => {
-          const data = doc.data();
-          // HTML 구조 생성
+        container.innerHTML = ""; 
+        querySnapshot.forEach((docSnap) => {
+          const data = docSnap.data();
+          const docId = docSnap.id; // DB의 고유 문서 ID 가져오기
+          
           const logHTML = `
             <div class="log-item">
               <div class="log-header">
-                <span class="subject-tag">${data.subject}</span>
-                <span class="log-date">${data.date}</span>
+                <div>
+                  <span class="subject-tag">${data.subject}</span>
+                  <span class="log-date">${data.date}</span>
+                </div>
+                <!-- 삭제 버튼에 고유 ID 심어두기 -->
+                <button class="delete-btn" data-id="${docId}">삭제</button>
               </div>
               <h3 class="log-title">${data.title}</h3>
               <p class="log-desc">${data.desc.replace(/\n/g, "<br>")}</p>
@@ -157,7 +164,25 @@
       }
     }
 
-    // 페이지가 열리면 즉시 불러오기 함수 실행
+    // 3. 데이터 삭제 기능 (삭제 버튼 클릭 감지)
+    document.getElementById("logsContainer").addEventListener("click", async (e) => {
+      // 클릭한 요소가 'delete-btn' 클래스를 가졌는지 확인
+      if (e.target.classList.contains("delete-btn")) {
+        const docId = e.target.getAttribute("data-id"); // 심어둔 문서 ID 꺼내기
+        
+        if (confirm("정말 이 일지를 삭제하시겠습니까?")) {
+          try {
+            await deleteDoc(doc(db, "studyLogs", docId));
+            alert("삭제되었습니다.");
+            window.location.reload(); // 화면 새로고침하여 반영
+          } catch (error) {
+            console.error("삭제 실패: ", error);
+            alert("삭제 중 오류가 발생했습니다.");
+          }
+        }
+      }
+    });
+
     loadLogs();
   </script>
 </body>
