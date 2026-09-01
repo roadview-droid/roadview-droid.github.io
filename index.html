@@ -13,55 +13,104 @@
   }
   
   body {
-    background-color: #050505; /* 어두운 배경 유지 */
+    background-color: #050505;
     font-family: 'Inter', 'Noto Sans KR', sans-serif;
     min-height: 100vh;
     display: flex;
-    justify-content: center; /* 수평 중앙 */
-    align-items: center; /* 수직 중앙 */
-    position: relative; /* 배경 div를 위해 필요 */
+    flex-direction: column; /* 상단 메뉴 배치를 위해 세로 정렬로 복구 */
+    position: relative;
   }
 
-  /* ★ 흐릿한 배경 적용 ★ */
+  /* 1. 상단 네비게이션 바 복구 */
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 50px;
+    background: transparent;
+    z-index: 10; /* 배경보다 앞에 오도록 설정 */
+  }
+
+  .logo {
+    font-size: 1.8rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: #FFFFFF;
+  }
+
+  nav ul {
+    display: flex;
+    list-style: none;
+    gap: 40px;
+  }
+
+  nav ul li a {
+    text-decoration: none;
+    color: #A0A0A0;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+
+  nav ul li a:hover {
+    color: #FF2A2A;
+  }
+
+  /* 2. 흐릿한 배경 적용 (흐림 정도 감소) */
   .blurred-background {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('RUN2X 사진.png'); /* ★ 배경으로 image_4.png 사용 ★ */
+    /* 이전 사진 파일명 확장자가 .jpg 였으므로 .jpg로 수정 (필요시 .png로 변경) */
+    background-image: url('RUN2X 사진.jpg'); 
     background-size: cover;
     background-position: center;
-    filter: blur(25px); /* ★ 흐림 정도를 강하게 (25px) ★ */
-    z-index: -1; /* 글자 뒤로 배치 */
-    opacity: 0.8; /* 배경을 약간 더 어둡게 하여 흰색 텍스트와 대조를 높임 */
+    filter: blur(8px); /* 25px에서 8px로 줄여 차가 잘 보이게 수정 */
+    z-index: -1;
+    opacity: 0.6; /* 텍스트 가독성을 위해 살짝 어둡게 처리 */
   }
 
-  /* 텍스트 컨테이너 (main) */
+  /* 3. 텍스트 컨테이너 */
   main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
   }
 
-  /* 중앙 RUN2X 텍스트 - 흐릿한 배경 위에 가독성 극대화 */
+  /* 중앙 RUN2X 텍스트 */
   .team-name {
     font-size: 8rem;
     font-weight: 900;
     letter-spacing: 20px;
     text-transform: uppercase;
-    color: #FFFFFF; /* ★ 깨끗한 흰색으로 변경하여 가독성 극대화 ★ */
-    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.8); /* 그림자 강화 */
-    /* 이전의 그라데이션은 흐릿한 배경 위에선 가독성을 해칠 수 있어 깨끗한 흰색으로 변경 */
+    color: #FFFFFF;
+    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
   }
 </style>
 </head>
 <body>
 
-  <!-- ★ 흐릿한 배경 div ★ -->
+  <!-- 배경 div -->
   <div class="blurred-background"></div>
 
-  <!-- 상단 창(Header) 제거됨 -->
+  <!-- 상단 창(Header) 복구됨 -->
+  <header>
+    <div class="logo">FRAME</div>
+    <nav>
+      <ul>
+        <li><a href="#">공부일지</a></li>
+        <li><a href="#">작업일지</a></li>
+        <li><a href="#">FSK 대회 규정</a></li>
+        <li><a href="#">기타</a></li>
+      </ul>
+    </nav>
+  </header>
 
-  <!-- 메인 타이포그래피 영역 (사진 카드 제거됨) -->
+  <!-- 메인 타이포그래피 영역 -->
   <main>
     <h1 class="team-name">RUN2X</h1>
   </main>
