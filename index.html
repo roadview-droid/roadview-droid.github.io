@@ -1,56 +1,122 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>프레임 - RUN2X</title>
-    <style>
-        /* 기본 여백 제거 */
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: 'Malgun Gothic', sans-serif;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RUN2X Frame Specs</title>
+<style>
+  /* 전체 컨테이너 스타일 - 다크 모드 배경 */
+  .tech-specs-container {
+    font-family: 'Inter', 'Noto Sans KR', sans-serif;
+    background-color: #121212;
+    color: #A0A0A0;
+    padding: 40px 30px;
+    border-radius: 12px;
+    max-width: 700px;
+    margin: 20px auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  }
 
-        /* 상단 남색 공간 (헤더) */
-        .top-frame {
-            background-color: navy; /* 남색 배경 */
-            color: white;           /* 글씨는 잘 보이게 흰색으로 설정 */
-            padding: 20px;          /* 안쪽 여백 */
-            box-sizing: border-box;
-        }
+  /* 섹션 제목 스타일 - 레이싱 레드 포인트 */
+  .tech-specs-container h2 {
+    color: #FFFFFF;
+    text-transform: uppercase;
+    border-left: 5px solid #FF2A2A;
+    padding-left: 15px;
+    margin-bottom: 30px;
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: 1.5px;
+  }
 
-        /* '프레임' 텍스트 설정 */
-        .frame-text {
-            font-size: 24px;
-            font-weight: bold;
-            text-align: left;       /* 왼쪽 정렬 (기본값) */
-        }
+  /* 테이블 기본 스타일 */
+  .spec-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1rem;
+  }
 
-        /* 하단 공간 */
-        .bottom-content {
-            padding: 50px 20px;
-            text-align: center;     /* 글씨를 가운데 배치하고 싶다면 유지, 왼쪽 배치 원하시면 left로 변경 */
-        }
+  /* 테이블 셀(칸) 스타일 */
+  .spec-table th, .spec-table td {
+    padding: 18px 20px;
+    text-align: left;
+    border-bottom: 1px solid #2A2A2A;
+  }
 
-        /* 'RUN2X' 텍스트 설정 */
-        .run2x-text {
-            font-size: 48px;
-            font-weight: bold;
-            color: #333;
-        }
-    </style>
+  /* 항목명(좌측) 스타일 */
+  .spec-table th {
+    color: #FFFFFF;
+    font-weight: 500;
+    width: 45%;
+    background-color: #1A1A1A;
+    letter-spacing: 0.5px;
+  }
+
+  /* 데이터 값(우측) 스타일 - 공학적인 느낌의 고정폭 폰트 적용 */
+  .spec-table td {
+    color: #E0E0E0;
+    font-family: 'Courier New', Courier, monospace; 
+    font-weight: bold;
+    font-size: 1.05rem;
+  }
+
+  /* 마우스 오버(Hover) 액션 - 인터랙티브 효과 */
+  .spec-table tbody tr {
+    transition: background-color 0.2s ease;
+  }
+
+  .spec-table tbody tr:hover {
+    background-color: #1E1E1E;
+  }
+
+  .spec-table tbody tr:hover td {
+    color: #FF2A2A; /* 마우스를 올렸을 때 수치 데이터가 붉은색으로 강조됨 */
+  }
+
+  /* 마지막 줄 테두리 제거 */
+  .spec-table tr:last-child th,
+  .spec-table tr:last-child td {
+    border-bottom: none;
+  }
+</style>
 </head>
 <body>
 
-    <div class="top-frame">
-        <div class="frame-text">프레임</div>
-    </div>
-
-    <div class="bottom-content">
-        <div class="run2x-text">RUN2X</div>
-    </div>
+<div class="tech-specs-container">
+  <h2>Frame Specifications</h2>
+  <table class="spec-table">
+    <tbody>
+      <tr>
+        <th>Primary Material</th>
+        <td>AISI 4130 Chromoly Steel</td>
+      </tr>
+      <tr>
+        <th>Main Hoop Outer Diameter</th>
+        <td>25.4 mm</td>
+      </tr>
+      <tr>
+        <th>Wall Thickness</th>
+        <td>2.4 mm</td>
+      </tr>
+      <tr>
+        <th>Torsional Rigidity</th>
+        <td>1,650 Nm/deg</td>
+      </tr>
+      <tr>
+        <th>Bare Frame Weight</th>
+        <td>28.5 kg</td>
+      </tr>
+      <tr>
+        <th>Wheelbase</th>
+        <td>1,530 mm</td>
+      </tr>
+      <tr>
+        <th>Welding Process</th>
+        <td>TIG (GTAW)</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 </body>
 </html>
