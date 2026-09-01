@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RUN2X - FSK 대회 규정</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background-color: #050505;
+    font-family: 'Inter', 'Noto Sans KR', sans-serif;
+    color: #E0E0E0;
+  }
+  header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 25px 50px; background: rgba(5, 5, 5, 0.85); 
+    border-bottom: 2px solid #FF2A2A; backdrop-filter: blur(5px); 
+  }
+  .logo a {
+    font-family: 'Orbitron', sans-serif; font-size: 1.8rem;
+    font-weight: 900; letter-spacing: 2px; color: #FFFFFF; text-decoration: none;
+  }
+  nav ul { display: flex; list-style: none; gap: 40px; }
+  nav ul li a {
+    text-decoration: none; color: #A0A0A0; font-size: 1.1rem;
+    font-weight: 500; transition: color 0.3s ease;
+  }
+  nav ul li a:hover { color: #FF2A2A; }
+
+  /* 페이지 콘텐츠 스타일 */
+  .page-container { max-width: 1000px; margin: 60px auto; padding: 0 20px; }
+  .page-title {
+    font-size: 2rem; color: #FFFFFF; margin-bottom: 40px;
+    border-left: 5px solid #1E50A0; padding-left: 15px; font-weight: 900;
+  }
+  
+  .content-box {
+    background-color: #111111; border: 1px solid #222;
+    padding: 30px; margin-bottom: 20px; border-radius: 8px;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  .content-box:hover { transform: translateY(-5px); border-color: #1E50A0; }
+  
+  .box-tag { color: #1E50A0; font-size: 0.95rem; font-weight: bold; margin-bottom: 12px; }
+  .box-title { font-size: 1.4rem; color: #FFFFFF; margin-bottom: 15px; }
+  .box-desc { color: #BBBBBB; line-height: 1.7; word-break: keep-all; }
+</style>
+</head>
+<body>
+  <header>
+    <div class="logo"><a href="index.html">FRAME</a></div>
+    <nav>
+      <ul>
+        <li><a href="study.html">공부일지</a></li>
+        <li><a href="worklog.html">작업일지</a></li>
+        <li><a href="rules.html" style="color: #FF2A2A;">FSK 대회 규정</a></li>
+        <li><a href="etc.html">기타</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="page-container">
+    <h2 class="page-title">FSK 대회 규정 (Rules)</h2>
+    
+    <div class="content-box">
+      <div class="box-tag">KSAE Formula</div>
+      <h3 class="box-title">2026 자작자동차대회 규정집</h3>
+      <p class="box-desc">한국자동차공학회(KSAE)에서 배포한 올해 Formula 부문 공식 규정집입니다. 차량의 프레임 두께, 재질, 롤 후프 높이 등 설계 전 필수 숙지 사항이 포함되어 있습니다.</p>
+    </div>
+
+    <div class="content-box">
+      <div class="box-tag">Frame Part 핵심 요약</div>
+      <h3 class="box-title">프레임 및 서스펜션 안전 규정</h3>
+      <p class="box-desc">메인 롤 후프 및 전방 롤 후프는 이음매 없는 강관(Seamless pipe)을 사용해야 하며, 규정된 외경과 두께를 만족해야 합니다. 용접부 비파괴 검사 기준도 함께 확인 바랍니다.</p>
+    </div>
+  </main>
+</body>
+</html>
