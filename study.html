@@ -31,7 +31,7 @@
   .toggle-btn:hover { background-color: #FF2A2A; border-color: #FF2A2A; color: #FFF; }
   
   .write-box { background-color: #0A0A0A; border: 1px solid #333; padding: 25px; border-radius: 8px; margin-bottom: 40px; }
-  /* 비밀번호 입력칸 스타일 추가 */
+  /* 비밀번호 입력칸 스타일 */
   .write-box input[type="text"], .write-box input[type="date"], .write-box input[type="password"] {
     width: 100%; background-color: #111; border: 1px solid #444; color: #FFF; padding: 12px; margin-bottom: 15px; border-radius: 4px; font-family: inherit;
   }
@@ -82,7 +82,7 @@
     </div>
     
     <div class="write-box" id="writeBox" style="display: none;">
-      <!-- 작성자, 날짜 옆에 비밀번호 입력칸 추가 -->
+      <!-- 비밀번호 입력칸 추가 -->
       <div class="input-row">
         <input type="text" id="authorInput" placeholder="작성자 이름">
         <input type="date" id="dateInput">
@@ -100,7 +100,9 @@
     </div>
   </main>
 
+  <!-- Quill 에디터 및 플러그인 로드 (충돌 방지 코드 추가) -->
   <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+  <script>window.Quill = Quill; /* 플러그인 충돌 방지를 위한 글로벌 선언 */</script>
   <script src="https://cdn.jsdelivr.net/npm/quill-image-resize-script@1.2.8/image-resize.min.js"></script>
 
   <script type="module">
@@ -194,11 +196,11 @@
     document.getElementById("saveBtn").addEventListener("click", async () => {
       const author = document.getElementById("authorInput").value;
       const date = document.getElementById("dateInput").value;
-      const password = document.getElementById("passwordInput").value; // 비밀번호 값 가져오기
+      const password = document.getElementById("passwordInput").value;
       const title = document.getElementById("titleInput").value;
       const descHTML = quill.root.innerHTML; 
       
-      // 비밀번호 칸도 비어있으면 안 되도록 조건 추가
+      // 비밀번호 칸을 포함해 하나라도 비어있으면 막기
       if (!author || !date || !password || !title || descHTML === '<p><br></p>') {
         alert("비밀번호를 포함한 모든 내용을 채워주세요!");
         return;
@@ -212,7 +214,7 @@
         await addDoc(collection(db, "studyLogs"), {
           author: author, 
           date: date, 
-          password: password, // 데이터베이스에 비밀번호 함께 저장
+          password: password, 
           title: title, 
           descHTML: descHTML, 
           timestamp: new Date()
@@ -239,7 +241,7 @@
           const data = docSnap.data();
           const docId = docSnap.id;
           
-          // 삭제 버튼에 해당 글의 비밀번호(data-pw)를 몰래 숨겨둡니다.
+          // 삭제 버튼에 비밀번호(data-pw) 숨기기
           const logHTML = `
             <div class="log-item">
               <div class="log-top-row">
@@ -259,21 +261,16 @@
     document.getElementById("logsContainer").addEventListener("click", async (e) => {
       if (e.target.classList.contains("delete-btn")) {
         const docId = e.target.getAttribute("data-id");
-        const realPassword = e.target.getAttribute("data-pw"); // 저장된 진짜 비밀번호
+        const realPassword = e.target.getAttribute("data-pw"); 
         
-        // 비밀번호가 설정된 글이라면 입력창을 띄워 확인
         if (realPassword) {
           const userInput = prompt("게시물을 삭제하려면 비밀번호를 입력하세요:");
-          
-          if (userInput === null) {
-            return; // 취소 버튼을 누른 경우 중단
-          }
+          if (userInput === null) return; 
           if (userInput !== realPassword) {
             alert("비밀번호가 일치하지 않습니다.");
-            return; // 비밀번호가 틀린 경우 중단
+            return; 
           }
         } else {
-          // 예전에 작성되어 비밀번호가 없는 글 처리
           if (!confirm("정말 이 일지를 삭제하시겠습니까?")) return;
         }
 
