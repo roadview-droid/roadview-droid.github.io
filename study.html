@@ -90,7 +90,7 @@
     import { getFirestore, collection, addDoc, getDocs, orderBy, query, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
     // ★ 여기에 발급받은 ImgBB API 키를 붙여넣으세요 ★
-    const IMGBB_API_KEY = "2fd6539d7bc62afc0657749be113a44f";
+    const IMGBB_API_KEY = "IMGBB_API_KEY_HERE";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBQT5zq1Od_fEycSiAb9-Ne9a2FgEi5ITU",
@@ -117,7 +117,7 @@
         return;
       }
       
-      if (imageFile && IMGBB_API_KEY === "IMGBB_API_KEY_HERE") {
+      if (imageFile && IMGBB_API_KEY === "2fd6539d7bc62afc0657749be113a44f") {
         alert("코드 하단에 ImgBB API 키를 먼저 입력해주세요!");
         return;
       }
