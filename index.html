@@ -17,11 +17,11 @@
     font-family: 'Inter', 'Noto Sans KR', sans-serif;
     min-height: 100vh;
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
     position: relative;
   }
 
-  /* 1. 상단 네비게이션 바 */
+  /* 1. 상단 네비게이션 바 (구분선 및 반투명 배경 추가) */
   header {
     display: flex;
     justify-content: space-between;
@@ -30,7 +30,7 @@
     background: rgba(5, 5, 5, 0.85); 
     border-bottom: 2px solid #FF2A2A; 
     backdrop-filter: blur(5px); 
-    z-index: 10; 
+    z-index: 10;
   }
 
   .logo {
@@ -68,17 +68,9 @@
     background-image: url('RUN2X 사진.png'); 
     background-size: cover;
     background-position: center;
-    filter: blur(8px); 
+    filter: blur(8px);
     z-index: -1;
-    opacity: 0.6; 
-    /* ★ 흐림 효과가 부드럽게 걷히도록 전환(Transition) 효과 추가 ★ */
-    transition: filter 0.5s ease, opacity 0.5s ease;
-  }
-
-  /* ★ RUN2X 텍스트에 마우스를 올렸을 때 배경을 선명하게 만드는 코드 ★ */
-  body:has(.team-name:hover) .blurred-background {
-    filter: blur(0px); /* 흐림 효과 제거 */
-    opacity: 1; /* 원래의 밝기와 선명도로 복구 */
+    opacity: 0.6;
   }
 
   /* 3. 텍스트 컨테이너 */
@@ -98,7 +90,16 @@
     text-transform: uppercase;
     color: #FFFFFF;
     text-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-    cursor: default; /* 마우스를 올렸을 때 텍스트 선택 커서가 아닌 기본 화살표 유지 */
+    /* ★ 보라색 테두리선 추가 ★ */
+    -webkit-text-stroke: 4px #8A2BE2; 
+    /* ★ 사라지는 애니메이션 전환 효과 ★ */
+    transition: opacity 0.4s ease; 
+    cursor: default;
+  }
+
+  /* ★ 마우스를 올렸을 때 투명도를 0으로 만들어 사라지게 함 ★ */
+  .team-name:hover {
+    opacity: 0; 
   }
 </style>
 </head>
