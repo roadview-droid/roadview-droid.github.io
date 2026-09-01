@@ -13,89 +13,55 @@
   }
   
   body {
-    background-color: #050505; /* 완전한 검은색에 가까운 배경 */
-    color: #FFFFFF;
+    background-color: #050505; /* 어두운 배경 유지 */
     font-family: 'Inter', 'Noto Sans KR', sans-serif;
     min-height: 100vh;
     display: flex;
-    flex-direction: column;
+    justify-content: center; /* 수평 중앙 */
+    align-items: center; /* 수직 중앙 */
+    position: relative; /* 배경 div를 위해 필요 */
   }
 
-  /* 1. 상단 네비게이션 바 (Header) */
-  header {
-    display: flex;
-    justify-content: space-between; /* 양끝으로 배치 */
-    align-items: center;
-    padding: 25px 50px;
-    background: transparent;
+  /* ★ 흐릿한 배경 적용 ★ */
+  .blurred-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('RUN2X 사진.png'); /* ★ 배경으로 image_4.png 사용 ★ */
+    background-size: cover;
+    background-position: center;
+    filter: blur(25px); /* ★ 흐림 정도를 강하게 (25px) ★ */
+    z-index: -1; /* 글자 뒤로 배치 */
+    opacity: 0.8; /* 배경을 약간 더 어둡게 하여 흰색 텍스트와 대조를 높임 */
   }
 
-  /* 왼쪽 로고 (FRAME) */
-  .logo {
-    font-size: 1.8rem;
-    font-weight: 900;
-    letter-spacing: 2px;
-    color: #FFFFFF;
-  }
-
-  /* 오른쪽 메뉴들 */
-  nav ul {
-    display: flex;
-    list-style: none;
-    gap: 40px; /* 메뉴 사이 간격 */
-  }
-
-  nav ul li a {
-    text-decoration: none;
-    color: #A0A0A0;
-    font-size: 1.1rem;
-    font-weight: 500;
-    transition: color 0.3s ease;
-  }
-
-  nav ul li a:hover {
-    color: #FF2A2A; /* 마우스 올렸을 때 포인트 컬러 */
-  }
-
-  /* 2. 메인 콘텐츠 영역 (타이포그래피 중심) */
+  /* 텍스트 컨테이너 (main) */
   main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 50px;
+    text-align: center;
   }
 
-  /* 중앙 RUN2X 텍스트 - 사진이 없어진 만큼 더 크고 웅장하게 설정 */
+  /* 중앙 RUN2X 텍스트 - 흐릿한 배경 위에 가독성 극대화 */
   .team-name {
-    font-size: 8rem; /* 6rem에서 8rem으로 확대 */
+    font-size: 8rem;
     font-weight: 900;
-    letter-spacing: 20px; /* 자간 확대 */
+    letter-spacing: 20px;
     text-transform: uppercase;
-    background: linear-gradient(180deg, #FFFFFF 0%, #444444 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent; /* 텍스트에 은은한 그라데이션 적용 */
-    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* 텍스트에 약간의 깊이감 부여 */
+    color: #FFFFFF; /* ★ 깨끗한 흰색으로 변경하여 가독성 극대화 ★ */
+    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.8); /* 그림자 강화 */
+    /* 이전의 그라데이션은 흐릿한 배경 위에선 가독성을 해칠 수 있어 깨끗한 흰색으로 변경 */
   }
 </style>
 </head>
 <body>
 
-  <!-- 상단 영역 -->
-  <header>
-    <div class="logo">FRAME</div>
-    <nav>
-      <ul>
-        <li><a href="#">공부일지</a></li>
-        <li><a href="#">작업일지</a></li>
-        <li><a href="#">FSK 대회 규정</a></li>
-        <li><a href="#">기타</a></li>
-      </ul>
-    </nav>
-  </header>
+  <!-- ★ 흐릿한 배경 div ★ -->
+  <div class="blurred-background"></div>
 
-  <!-- 메인 타이포그래피 영역 (사진 제거됨) -->
+  <!-- 상단 창(Header) 제거됨 -->
+
+  <!-- 메인 타이포그래피 영역 (사진 카드 제거됨) -->
   <main>
     <h1 class="team-name">RUN2X</h1>
   </main>
