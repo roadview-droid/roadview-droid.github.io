@@ -57,7 +57,7 @@
     color: #FF2A2A; /* 마우스 올렸을 때 포인트 컬러 */
   }
 
-  /* 2. 메인 콘텐츠 영역 (자동차 사진 + RUN2X) */
+  /* 2. 메인 콘텐츠 영역 (타이포그래피 중심) */
   main {
     flex: 1;
     display: flex;
@@ -67,34 +67,16 @@
     padding-bottom: 50px;
   }
 
-  /* 자동차 프레임 이미지 영역 - 이미지 크기 축소 */
-  .car-image-container {
-    width: 100%;
-    max-width: 650px; /* 사진 최대 크기를 줄여 RUN2X 글씨보다 조금만 더 크게 설정 */
-    margin-bottom: 20px;
-    background-color: #FFFFFF; /* 흰색 배경 이미지를 그대로 사용하기 위해 컨테이너 배경 추가 */
-    border-radius: 12px;
-    overflow: hidden; /* 테두리 반경이 적용되도록 */
-    box-shadow: 0 20px 50px rgba(255, 255, 255, 0.15); /* 줄어든 이미지에 맞춰 그림자 효과 살짝 강화 */
-  }
-
-  .car-image-container img {
-    width: 100%;
-    height: auto;
-    object-fit: contain; /* 이미지 비율 유지하며 컨테이너에 맞춤 */
-    display: block; /* 이미지 아래 공백 제거 */
-  }
-
-  /* 하단 RUN2X 텍스트 */
+  /* 중앙 RUN2X 텍스트 - 사진이 없어진 만큼 더 크고 웅장하게 설정 */
   .team-name {
-    font-size: 6rem; /* 텍스트 크기 아주 크게 */
+    font-size: 8rem; /* 6rem에서 8rem으로 확대 */
     font-weight: 900;
-    letter-spacing: 15px;
+    letter-spacing: 20px; /* 자간 확대 */
     text-transform: uppercase;
-    background: linear-gradient(180deg, #FFFFFF 0%, #555555 100%);
+    background: linear-gradient(180deg, #FFFFFF 0%, #444444 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent; /* 텍스트에 은은한 그라데이션 적용 */
-    margin-top: -30px; /* 사진과 살짝 겹치게(혹은 가깝게) 배치하여 역동성 부여 */
+    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* 텍스트에 약간의 깊이감 부여 */
   }
 </style>
 </head>
@@ -113,12 +95,8 @@
     </nav>
   </header>
 
-  <!-- 메인 이미지 및 타이포그래피 영역 -->
+  <!-- 메인 타이포그래피 영역 (사진 제거됨) -->
   <main>
-    <div class="car-image-container">
-  <!-- src 안의 파일명을 실제 파일명으로 수정 -->
-    <img src="RUN2X 프레임 사진.png" alt="RUN2X Formula Frame Chassis">
-  </div>
     <h1 class="team-name">RUN2X</h1>
   </main>
 
