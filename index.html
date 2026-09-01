@@ -17,20 +17,20 @@
     font-family: 'Inter', 'Noto Sans KR', sans-serif;
     min-height: 100vh;
     display: flex;
-    flex-direction: column;
+    flex-direction: column; 
     position: relative;
   }
 
-  /* 1. 상단 네비게이션 바 (구분선 및 반투명 배경 추가) */
+  /* 1. 상단 네비게이션 바 */
   header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 25px 50px;
-    background: rgba(5, 5, 5, 0.85); /* ★ 메뉴창이 확실히 구분되도록 반투명 검은 배경 추가 ★ */
-    border-bottom: 2px solid #FF2A2A; /* ★ 사진과 메뉴를 나누는 레이싱 레드 포인트 선 ★ */
-    backdrop-filter: blur(5px); /* 메뉴 뒷배경을 살짝 뭉개주어 고급스러운 느낌 부여 */
-    z-index: 10;
+    background: rgba(5, 5, 5, 0.85); 
+    border-bottom: 2px solid #FF2A2A; 
+    backdrop-filter: blur(5px); 
+    z-index: 10; 
   }
 
   .logo {
@@ -68,9 +68,17 @@
     background-image: url('RUN2X 사진.png'); 
     background-size: cover;
     background-position: center;
-    filter: blur(8px);
+    filter: blur(8px); 
     z-index: -1;
-    opacity: 0.6;
+    opacity: 0.6; 
+    /* ★ 흐림 효과가 부드럽게 걷히도록 전환(Transition) 효과 추가 ★ */
+    transition: filter 0.5s ease, opacity 0.5s ease;
+  }
+
+  /* ★ RUN2X 텍스트에 마우스를 올렸을 때 배경을 선명하게 만드는 코드 ★ */
+  body:has(.team-name:hover) .blurred-background {
+    filter: blur(0px); /* 흐림 효과 제거 */
+    opacity: 1; /* 원래의 밝기와 선명도로 복구 */
   }
 
   /* 3. 텍스트 컨테이너 */
@@ -90,6 +98,7 @@
     text-transform: uppercase;
     color: #FFFFFF;
     text-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    cursor: default; /* 마우스를 올렸을 때 텍스트 선택 커서가 아닌 기본 화살표 유지 */
   }
 </style>
 </head>
