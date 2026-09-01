@@ -7,7 +7,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
-<!-- Quill 에디터 CSS -->
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
 <style>
@@ -24,7 +23,14 @@
   nav ul li a:hover { color: #FF2A2A; }
 
   .study-container { max-width: 1000px; margin: 60px auto; padding: 0 20px; }
-  .page-title { font-size: 2rem; color: #FFFFFF; margin-bottom: 40px; border-left: 5px solid #FF2A2A; padding-left: 15px; font-weight: 900; }
+  
+  /* 제목과 새글작성 버튼을 한 줄에 배치 */
+  .title-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+  .page-title { font-size: 2rem; color: #FFFFFF; border-left: 5px solid #FF2A2A; padding-left: 15px; font-weight: 900; }
+  
+  /* 글쓰기 토글 버튼 스타일 */
+  .toggle-btn { background-color: #222; color: #E0E0E0; border: 1px solid #444; padding: 12px 25px; font-size: 1rem; font-weight: bold; border-radius: 4px; cursor: pointer; transition: all 0.3s; }
+  .toggle-btn:hover { background-color: #FF2A2A; border-color: #FF2A2A; color: #FFF; }
   
   .write-box { background-color: #0A0A0A; border: 1px solid #333; padding: 25px; border-radius: 8px; margin-bottom: 40px; }
   .write-box input[type="text"], .write-box input[type="date"] {
@@ -32,7 +38,6 @@
   }
   .input-row { display: flex; gap: 15px; }
   
-  /* Quill 에디터 다크모드 스타일 */
   .ql-toolbar.ql-snow { border: 1px solid #444 !important; background: #111; border-radius: 4px 4px 0 0; }
   .ql-container.ql-snow { border: 1px solid #444 !important; border-top: none !important; height: 300px; border-radius: 0 0 4px 4px; font-family: inherit; font-size: 1rem; color: #FFF; margin-bottom: 15px; }
   .ql-snow .ql-stroke { stroke: #E0E0E0 !important; }
@@ -54,7 +59,6 @@
   .log-title { font-size: 1.4rem; color: #FFFFFF; margin-bottom: 8px; line-height: 1.4; }
   .log-author { color: #888888; font-size: 0.9rem; margin-bottom: 15px; }
   
-  /* 본문 내 이미지 출력 스타일 */
   .log-desc { color: #BBBBBB; line-height: 1.7; word-break: keep-all; }
   .log-desc img { max-width: 100%; border-radius: 8px; margin: 10px 0; border: 1px solid #333; }
 </style>
@@ -74,16 +78,19 @@
   </header>
 
   <main class="study-container">
-    <h2 class="page-title">공부일지 (Study Log)</h2>
+    <div class="title-header">
+      <h2 class="page-title">공부일지 (Study Log)</h2>
+      <button id="toggleWriteBtn" class="toggle-btn">새 글 작성</button>
+    </div>
     
-    <div class="write-box">
+    <!-- 평소에는 숨겨져 있는 글쓰기 영역 -->
+    <div class="write-box" id="writeBox" style="display: none;">
       <div class="input-row">
         <input type="text" id="authorInput" placeholder="작성자 이름">
         <input type="date" id="dateInput">
       </div>
       <input type="text" id="titleInput" placeholder="일지 제목을 입력하세요">
       
-      <!-- 단순 텍스트 칸을 웹 에디터(Quill)로 대체 -->
       <div id="editor"></div>
       
       <button class="submit-btn" id="saveBtn">일지 등록하기</button>
@@ -94,14 +101,12 @@
     </div>
   </main>
 
-  <!-- Quill JS -->
   <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
     import { getFirestore, collection, addDoc, getDocs, orderBy, query, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
-    // 회원님의 실제 API 키를 정확한 위치에 적용했습니다.
     const IMGBB_API_KEY = "2fd6539d7bc62afc0657749be113a44f";
 
     const firebaseConfig = {
@@ -116,7 +121,24 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Quill 에디터 초기화
+    // 새 글 작성 버튼 클릭 시 작동하는 토글 기능
+    const toggleBtn = document.getElementById("toggleWriteBtn");
+    const writeBox = document.getElementById("writeBox");
+
+    toggleBtn.addEventListener("click", () => {
+      if (writeBox.style.display === "none") {
+        writeBox.style.display = "block";
+        toggleBtn.innerText = "작성 취소";
+        toggleBtn.style.backgroundColor = "#555";
+        toggleBtn.style.borderColor = "#555";
+      } else {
+        writeBox.style.display = "none";
+        toggleBtn.innerText = "새 글 작성";
+        toggleBtn.style.backgroundColor = "#222";
+        toggleBtn.style.borderColor = "#444";
+      }
+    });
+
     const quill = new Quill('#editor', {
       theme: 'snow',
       placeholder: '공부한 내용과 사진을 자유롭게 입력하세요...',
@@ -132,7 +154,6 @@
       }
     });
 
-    // 에디터에서 사진 버튼을 눌렀을 때 작동하는 함수
     function imageHandler() {
       const input = document.createElement('input');
       input.setAttribute('type', 'file');
@@ -156,7 +177,7 @@
           if (result.success) {
             const url = result.data.url;
             const range = quill.getSelection(true);
-            quill.insertEmbed(range.index, 'image', url); // 커서 위치에 이미지 쏙 들어가게 하기
+            quill.insertEmbed(range.index, 'image', url); 
             quill.setSelection(range.index + 1);
           } else {
             alert("이미지 업로드에 실패했습니다.");
