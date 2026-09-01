@@ -50,6 +50,10 @@
   .edit-btn:hover { background-color: #4CAF50; color: #FFF; }
   .delete-btn { background-color: transparent; color: #555; border: 1px solid #444; padding: 5px 10px; border-radius: 4px; font-size: 0.85rem; cursor: pointer; transition: all 0.2s ease; }
   .delete-btn:hover { background-color: #CC0000; color: #FFF; border-color: #CC0000; }
+  
+  /* 작성하는 에디터 창에는 넉넉한 여백 추가, 읽는 화면은 여백 제거 */
+  #editor .ql-editor { padding: 25px !important; }
+  .log-desc .ql-editor { padding: 0 !important; }
 </style>
 </head>
 <body>
@@ -234,7 +238,9 @@
             </div>
             <div class="log-content-box" id="content-${docId}">
               ${imageTag}
-              <div class="log-desc">${data.descHTML || (data.desc ? data.desc.replace(/\n/g, "<br>") : "")}</div>
+              <div class="log-desc ql-snow">
+                <div class="ql-editor">${data.descHTML || (data.desc ? data.desc.replace(/\n/g, "<br>") : "")}</div>
+              </div>
             </div>`;
         });
         listHTML += `</div>`; container.innerHTML = listHTML;
