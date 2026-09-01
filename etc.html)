@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RUN2X - 기타</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background-color: #050505;
+    font-family: 'Inter', 'Noto Sans KR', sans-serif;
+    color: #E0E0E0;
+  }
+  header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 25px 50px; background: rgba(5, 5, 5, 0.85); 
+    border-bottom: 2px solid #FF2A2A; backdrop-filter: blur(5px); 
+  }
+  .logo a {
+    font-family: 'Orbitron', sans-serif; font-size: 1.8rem;
+    font-weight: 900; letter-spacing: 2px; color: #FFFFFF; text-decoration: none;
+  }
+  nav ul { display: flex; list-style: none; gap: 40px; }
+  nav ul li a {
+    text-decoration: none; color: #A0A0A0; font-size: 1.1rem;
+    font-weight: 500; transition: color 0.3s ease;
+  }
+  nav ul li a:hover { color: #FF2A2A; }
+
+  /* 페이지 콘텐츠 스타일 */
+  .page-container { max-width: 1000px; margin: 60px auto; padding: 0 20px; }
+  .page-title {
+    font-size: 2rem; color: #FFFFFF; margin-bottom: 40px;
+    border-left: 5px solid #8A2BE2; /* 보라색 포인트 */
+    padding-left: 15px; font-weight: 900;
+  }
+  
+  .content-box {
+    background-color: #111111; border: 1px solid #222;
+    padding: 30px; margin-bottom: 20px; border-radius: 8px;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  .content-box:hover { transform: translateY(-5px); border-color: #8A2BE2; }
+  
+  .box-title { font-size: 1.4rem; color: #FFFFFF; margin-bottom: 15px; }
+  .box-desc { color: #BBBBBB; line-height: 1.7; word-break: keep-all; }
+</style>
+</head>
+<body>
+  <header>
+    <div class="logo"><a href="index.html">FRAME</a></div>
+    <nav>
+      <ul>
+        <li><a href="study.html">공부일지</a></li>
+        <li><a href="worklog.html">작업일지</a></li>
+        <li><a href="rules.html">FSK 대회 규정</a></li>
+        <li><a href="etc.html" style="color: #FF2A2A;">기타</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="page-container">
+    <h2 class="page-title">기타 (ETC)</h2>
+    
+    <div class="content-box">
+      <h3 class="box-title">유용한 사이트 및 참고 자료</h3>
+      <p class="box-desc">
+        - 한국자동차공학회(KSAE) 홈페이지<br>
+        - SolidWorks / AutoCAD 프레임 구조 해석 튜토리얼 모음<br>
+        - 차량 동역학 및 서스펜션 설계 관련 웹 세미나 링크
+      </p>
+    </div>
+
+    <div class="content-box">
+      <h3 class="box-title">부품 구매처 및 외주 제작 업체</h3>
+      <p class="box-desc">
+        - 파이프 및 철강 자재 구매처 목록<br>
+        - 레이저 커팅 및 CNC 가공 전문 업체 연락처
+      </p>
+    </div>
+  </main>
+</body>
+</html>
