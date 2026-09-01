@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RUN2X - 작업일지</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  /* 기본 설정 및 헤더 스타일 (메인 화면과 동일하게 유지) */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background-color: #050505;
+    font-family: 'Inter', 'Noto Sans KR', sans-serif;
+    color: #E0E0E0;
+  }
+  header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 25px 50px; background: rgba(5, 5, 5, 0.85); 
+    border-bottom: 2px solid #FF2A2A; backdrop-filter: blur(5px); 
+  }
+  
+  /* 로고 클릭 시 메인으로 돌아가도록 a태그 스타일 추가 */
+  .logo a {
+    font-family: 'Orbitron', sans-serif; font-size: 1.8rem;
+    font-weight: 900; letter-spacing: 2px; color: #FFFFFF; text-decoration: none;
+  }
+  
+  nav ul { display: flex; list-style: none; gap: 40px; }
+  nav ul li a {
+    text-decoration: none; color: #A0A0A0; font-size: 1.1rem;
+    font-weight: 500; transition: color 0.3s ease;
+  }
+  nav ul li a:hover { color: #FF2A2A; }
+
+  /* =========================================
+     작업일지 전용 콘텐츠 스타일
+     ========================================= */
+  .worklog-container {
+    max-width: 1000px;
+    margin: 60px auto;
+    padding: 0 20px;
+  }
+  .page-title {
+    font-size: 2rem; color: #FFFFFF; margin-bottom: 40px;
+    border-left: 5px solid #1E50A0; padding-left: 15px; font-weight: 900;
+  }
+  
+  /* 개별 작업일지 박스 디자인 */
+  .log-item {
+    background-color: #111111;
+    border: 1px solid #222;
+    padding: 30px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  
+  /* 마우스 올렸을 때 살짝 위로 떠오르는 효과 */
+  .log-item:hover { 
+    transform: translateY(-5px); 
+    border-color: #FF2A2A; 
+  }
+  
+  .log-date { color: #FF2A2A; font-size: 0.95rem; font-weight: bold; margin-bottom: 12px; }
+  .log-title { font-size: 1.4rem; color: #FFFFFF; margin-bottom: 15px; }
+  .log-desc { color: #BBBBBB; line-height: 1.7; word-break: keep-all; }
+</style>
+</head>
+<body>
+
+  <!-- 상단 창(Header) -->
+  <header>
+    <!-- ★ 로고를 누르면 메인 화면(index.html)으로 돌아가도록 링크 추가 ★ -->
+    <div class="logo"><a href="index.html">FRAME</a></div>
+    <nav>
+      <ul>
+        <li><a href="#">공부일지</a></li>
+        <!-- 현재 페이지가 작업일지임을 나타내기 위해 글씨를 빨간색으로 고정 -->
+        <li><a href="worklog.html" style="color: #FF2A2A;">작업일지</a></li>
+        <li><a href="#">FSK 대회 규정</a></li>
+        <li><a href="#">기타</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- 작업일지 콘텐츠 영역 -->
+  <main class="worklog-container">
+    <h2 class="page-title">작업일지 (Work Log)</h2>
+    
+    <!-- 첫 번째 작업일지 -->
+    <div class="log-item">
+      <div class="log-date">2026. 09. 01</div>
+      <h3 class="log-title">프레임 파이프 노칭 및 가용접 진행</h3>
+      <p class="log-desc">메인 후프와 프론트 롤 후프 파이프 노칭 작업을 완료하고, 지그에 올려 전체적인 뼈대 가용접을 진행했습니다. 파이프 간 단차 없이 깔끔하게 맞아떨어지는 것을 확인했습니다.</p>
+    </div>
+
+    <!-- 두 번째 작업일지 -->
+    <div class="log-item">
+      <div class="log-date">2026. 08. 28</div>
+      <h3 class="log-title">서스펜션 브래킷 위치 2차 수정</h3>
+      <p class="log-desc">구조 해석 결과 특정 구간에 응력이 집중되는 부분을 발견하여, 어퍼암 브래킷의 위치를 5mm 하향 조정하고 보강판 두께를 늘리는 방향으로 CAD 설계를 수정했습니다.</p>
+    </div>
+  </main>
+
+</body>
+</html>
