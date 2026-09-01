@@ -15,13 +15,37 @@
   body {
     background-color: #050505;
     font-family: 'Inter', 'Noto Sans KR', sans-serif;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    position: relative;
+    color: #E0E0E0;
+    overflow-x: hidden;
   }
 
-  /* 1. 상단 네비게이션 바 */
+  /* =========================================
+     1. 메인 히어로 섹션 (사진 + RUN2X 텍스트)
+     ========================================= */
+  .hero-section {
+    position: relative;
+    min-height: 100vh; /* 화면 전체 높이 차지 */
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* 흐릿한 배경 적용 (스크롤 시 위로 올라가도록 fixed -> absolute 변경) */
+  .blurred-background {
+    position: absolute; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('RUN2X 사진.png'); 
+    background-size: cover;
+    background-position: center;
+    filter: blur(8px);
+    z-index: -1;
+    opacity: 0.6;
+    transition: filter 0.5s ease, opacity 0.5s ease;
+  }
+
+  /* 상단 네비게이션 바 */
   header {
     display: flex;
     justify-content: space-between;
@@ -58,30 +82,8 @@
     color: #FF2A2A;
   }
 
-  /* 2. 흐릿한 배경 적용 */
-  .blurred-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('RUN2X 사진.png'); 
-    background-size: cover;
-    background-position: center;
-    filter: blur(8px);
-    z-index: -1;
-    opacity: 0.6;
-    transition: filter 0.5s ease, opacity 0.5s ease;
-  }
-
-  /* 배경 선명해지는 효과 */
-  body:has(.team-name:hover) .blurred-background {
-    filter: blur(0px);
-    opacity: 1; 
-  }
-
-  /* 3. 텍스트 컨테이너 */
-  main {
+  /* 텍스트 컨테이너 */
+  .hero-content {
     flex: 1;
     display: flex;
     justify-content: center;
@@ -93,50 +95,204 @@
   .team-name {
     font-size: 8rem;
     font-weight: 900;
-    letter-spacing: 8px; /* 글자 간격 축소 (20px -> 8px) */
+    letter-spacing: 8px;
     text-transform: uppercase;
     color: #FFFFFF;
-    
-    /* 테두리 파먹힘/겹침 현상 해결을 위해 다중 text-shadow 기법 적용 */
     text-shadow: 
       3px 3px 0 #8A2BE2, -3px -3px 0 #8A2BE2,
       3px -3px 0 #8A2BE2, -3px 3px 0 #8A2BE2,
       0px 3px 0 #8A2BE2, 0px -3px 0 #8A2BE2,
       3px 0px 0 #8A2BE2, -3px 0px 0 #8A2BE2,
-      0 10px 30px rgba(0, 0, 0, 0.8); /* 기존 그림자 유지 */
-      
+      0 10px 30px rgba(0, 0, 0, 0.8);
     cursor: default;
     transition: opacity 0.4s ease; 
   }
 
+  /* 배경 선명해지는 효과 */
+  .hero-section:has(.team-name:hover) .blurred-background {
+    filter: blur(0px);
+    opacity: 1; 
+  }
+  
   /* 글씨 사라지는 효과 */
   .team-name:hover {
     opacity: 0; 
+  }
+
+
+  /* =========================================
+     2. 소개 및 수상기록 섹션 (스크롤 아래 영역)
+     ========================================= */
+  .about-section {
+    padding: 80px 10%;
+    background-color: #050505; /* 검은 배경 설정 */
+    position: relative;
+    z-index: 5;
+  }
+
+  /* 섹션 제목 디자인 (이미지의 파란색 포인트 바 적용) */
+  .section-title {
+    font-size: 1.8rem;
+    color: #FFFFFF;
+    margin-bottom: 25px;
+    margin-top: 60px;
+    position: relative;
+    padding-top: 15px;
+    font-weight: 900;
+  }
+
+  .section-title:first-child {
+    margin-top: 0;
+  }
+
+  .section-title::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 35px;
+    height: 5px;
+    background-color: #1E50A0; /* 원본 이미지 느낌의 파란색 포인트 */
+  }
+
+  /* 소개 텍스트 */
+  .about-text {
+    line-height: 1.8;
+    color: #CCCCCC;
+    font-size: 1.1rem;
+    word-break: keep-all;
+    margin-bottom: 20px;
+  }
+
+  /* 수상기록 테이블 (다크모드 커스텀) */
+  .history-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border-top: 2px solid #555;
+    border-bottom: 2px solid #555;
+  }
+
+  .history-table th, .history-table td {
+    border: 1px solid #222;
+    padding: 18px 20px;
+    font-size: 1rem;
+  }
+
+  .history-table th {
+    background-color: #111111;
+    color: #FFFFFF;
+    font-weight: bold;
+    width: 40%;
+    text-align: center;
+  }
+
+  .history-table td {
+    background-color: #0A0A0A;
+    color: #BBBBBB;
+    text-align: center;
   }
 </style>
 </head>
 <body>
 
-  <!-- 배경 div -->
-  <div class="blurred-background"></div>
+  <!-- 1. 메인 히어로 섹션 -->
+  <div class="hero-section">
+    <!-- 배경 div -->
+    <div class="blurred-background"></div>
 
-  <!-- 상단 창(Header) -->
-  <header>
-    <div class="logo">FRAME</div>
-    <nav>
-      <ul>
-        <li><a href="#">공부일지</a></li>
-        <li><a href="#">작업일지</a></li>
-        <li><a href="#">FSK 대회 규정</a></li>
-        <li><a href="#">기타</a></li>
-      </ul>
-    </nav>
-  </header>
+    <!-- 상단 창(Header) -->
+    <header>
+      <div class="logo">FRAME</div>
+      <nav>
+        <ul>
+          <li><a href="#">공부일지</a></li>
+          <li><a href="#">작업일지</a></li>
+          <li><a href="#">FSK 대회 규정</a></li>
+          <li><a href="#">기타</a></li>
+        </ul>
+      </nav>
+    </header>
 
-  <!-- 메인 타이포그래피 영역 -->
-  <main>
-    <h1 class="team-name">RUN2X</h1>
-  </main>
+    <!-- 메인 타이포그래피 영역 -->
+    <main class="hero-content">
+      <h1 class="team-name">RUN2X</h1>
+    </main>
+  </div>
+
+  <!-- 2. 스크롤 아래 콘텐츠 섹션 (검은 배경) -->
+  <section class="about-section">
+    
+    <!-- 소개 영역 -->
+    <h2 class="section-title">소개</h2>
+    <p class="about-text">
+      Run2X는 Run To Extreme의 약자로 "극한을 향해 달리다"라는 의미를 함양하고 있습니다.<br>
+      학생들은 1년의 준비기간을 가지고 업무를 나눠 연구, 설계, 제작을 전부 직접 진행하여 자작자동차를 완성하게 됩니다.<br>
+      완성된 자동차로 매년 8월 군산에서 열리는 KSAE 대학생 자작자동차대회 등에 참여하고 있습니다.<br>
+      Run2X는 1998년부터 2012년도까지는 오프로드 차량인 Baja 부문에 출전하였으며, 2013년 부터 경주용 자동차인 Formula 부문에 출전하고 있습니다. Run2X 동아리에서는 아래와 같이 다양한 수상을 하였습니다.
+    </p>
+
+    <!-- 대회출전 및 수상기록 영역 -->
+    <h2 class="section-title">대회출전 및 수상기록</h2>
+    <table class="history-table">
+      <tbody>
+        <!-- 2002년 -->
+        <tr>
+          <th rowspan="4">2002년 전국 대학생 자작자동차 대회</th>
+          <td>Mechanical Design 분야 4위</td>
+        </tr>
+        <tr><td>Operation Comport 분야 1위</td></tr>
+        <tr><td>Service Ability 분야 1위</td></tr>
+        <tr><td>종합 전국 11위 / 수도권 1위</td></tr>
+        
+        <!-- 2004년 -->
+        <tr>
+          <th rowspan="3">2004년 전국 대학생 자작자동차 대회</th>
+          <td>설계보고서 분야 1위</td>
+        </tr>
+        <tr><td>내구 레이스 분야 1위</td></tr>
+        <tr><td>종합 전국 5위</td></tr>
+        
+        <!-- 2005년 -->
+        <tr>
+          <th rowspan="2">2005년 전국 대학생 자작자동차 대회</th>
+          <td>설계보고서 분야 우수상</td>
+        </tr>
+        <tr><td>내구 레이스 분야 우수상</td></tr>
+
+        <!-- 2006년 -->
+        <tr>
+          <th>2006년 전국 대학생 자작자동차 대회</th>
+          <td>Mechanical Design 분야 우수상</td>
+        </tr>
+
+        <!-- 2007년 -->
+        <tr>
+          <th>2007년 전국 대학생 자작자동차 대회</th>
+          <td>Rock Crawling 분야 전국 3위</td>
+        </tr>
+
+        <!-- 2011년 보쉬 -->
+        <tr>
+          <th>2011년 보쉬 충전공구 레이스</th>
+          <td>종합 5위</td>
+        </tr>
+
+        <!-- 2011년 국제 -->
+        <tr>
+          <th>2011년 국제 대학생 자작자동차 대회</th>
+          <td>Rock Crawling 분야 전국 1위</td>
+        </tr>
+
+        <!-- 2014년 알테어 -->
+        <tr>
+          <th rowspan="2">2014년 알테어 오픈 콘테스트</th>
+          <td>자작 자동차 부문 동상</td>
+        </tr>
+        <tr><td>컨셉 디자인 부문 장려상</td></tr>
+      </tbody>
+    </table>
+  </section>
 
 </body>
 </html>
