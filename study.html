@@ -65,8 +65,9 @@
   .delete-btn { background-color: transparent; color: #555; border: 1px solid #444; padding: 5px 10px; border-radius: 4px; font-size: 0.85rem; cursor: pointer; transition: all 0.2s ease; }
   .delete-btn:hover { background-color: #CC0000; color: #FFF; border-color: #CC0000; }
   
-  /* 뷰어 모드에서도 에디터 폰트 크기가 적용되도록 기본 여백 제거 */
-  .ql-editor { padding: 0 !important; }
+  /* 작성하는 에디터 창에는 넉넉한 여백 추가, 읽는 화면은 여백 제거 */
+  #editor .ql-editor { padding: 25px !important; }
+  .log-desc .ql-editor { padding: 0 !important; }
 </style>
 </head>
 <body>
@@ -279,7 +280,6 @@
           
           const imageTag = data.imageUrl ? `<img src="${data.imageUrl}" class="log-image" alt="첨부 이미지">` : "";
           
-          // 핵심 해결 부분: 본문을 ql-snow와 ql-editor 클래스로 감싸서 에디터 폰트 크기/색상이 동일하게 렌더링되게 만듭니다.
           listHTML += `
             <div class="board-row">
               <div class="col-title toggle-title" data-target="${docId}">${data.title}</div>
