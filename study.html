@@ -31,7 +31,6 @@
   .toggle-btn:hover { background-color: #FF2A2A; border-color: #FF2A2A; color: #FFF; }
   
   .write-box { background-color: #0A0A0A; border: 1px solid #333; padding: 25px; border-radius: 8px; margin-bottom: 40px; }
-  /* 비밀번호 입력칸 스타일 */
   .write-box input[type="text"], .write-box input[type="date"], .write-box input[type="password"] {
     width: 100%; background-color: #111; border: 1px solid #444; color: #FFF; padding: 12px; margin-bottom: 15px; border-radius: 4px; font-family: inherit;
   }
@@ -82,7 +81,6 @@
     </div>
     
     <div class="write-box" id="writeBox" style="display: none;">
-      <!-- 비밀번호 입력칸 추가 -->
       <div class="input-row">
         <input type="text" id="authorInput" placeholder="작성자 이름">
         <input type="date" id="dateInput">
@@ -100,10 +98,8 @@
     </div>
   </main>
 
-  <!-- Quill 에디터 및 플러그인 로드 (충돌 방지 코드 추가) -->
+  <!-- 충돌을 일으켰던 외부 스크립트(image-resize)를 제거했습니다 -->
   <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-  <script>window.Quill = Quill; /* 플러그인 충돌 방지를 위한 글로벌 선언 */</script>
-  <script src="https://cdn.jsdelivr.net/npm/quill-image-resize-script@1.2.8/image-resize.min.js"></script>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
@@ -144,7 +140,6 @@
       theme: 'snow',
       placeholder: '공부한 내용과 사진을 자유롭게 입력하세요...',
       modules: {
-        imageResize: { displaySize: true },
         toolbar: {
           container: [
             [{ 'size': ['small', false, 'large', 'huge'] }], 
@@ -180,7 +175,7 @@
           const result = await response.json();
           if (result.success) {
             const url = result.data.url;
-            const range = quill.getSelection(true);
+            const range = quill.getSelection(true) || { index: quill.getLength() };
             quill.insertEmbed(range.index, 'image', url); 
             quill.setSelection(range.index + 1);
           } else {
@@ -200,8 +195,10 @@
       const title = document.getElementById("titleInput").value;
       const descHTML = quill.root.innerHTML; 
       
-      // 비밀번호 칸을 포함해 하나라도 비어있으면 막기
-      if (!author || !date || !password || !title || descHTML === '<p><br></p>') {
+      // 글 내용이 비어있는지 더 정확하게 확인하는 조건
+      const isEmpty = quill.getText().trim().length === 0 && !descHTML.includes('<img');
+      
+      if (!author || !date || !password || !title || isEmpty) {
         alert("비밀번호를 포함한 모든 내용을 채워주세요!");
         return;
       }
@@ -241,7 +238,9 @@
           const data = docSnap.data();
           const docId = docSnap.id;
           
-          // 삭제 버튼에 비밀번호(data-pw) 숨기기
+          // 예전 방식(단순 텍스트+사진)으로 올렸던 글의 사진도 정상적으로 불러오기 위한 코드
+          const imageTag = data.imageUrl ? `<img src="${data.imageUrl}" class="log-image" alt="첨부 이미지">` : "";
+          
           const logHTML = `
             <div class="log-item">
               <div class="log-top-row">
@@ -250,7 +249,8 @@
               </div>
               <h3 class="log-title">${data.title}</h3>
               <div class="log-author">작성자: ${data.author}</div>
-              <div class="log-desc">${data.descHTML || data.desc.replace(/\n/g, "<br>")}</div>
+              ${imageTag}
+              <div class="log-desc">${data.descHTML || (data.desc ? data.desc.replace(/\n/g, "<br>") : "")}</div>
             </div>
           `;
           container.innerHTML += logHTML;
@@ -271,7 +271,7 @@
             return; 
           }
         } else {
-          if (!confirm("정말 이 일지를 삭제하시겠습니까?")) return;
+          if (!confirm("이 일지는 비밀번호가 없습니다. 정말 삭제하시겠습니까?")) return;
         }
 
         try {
