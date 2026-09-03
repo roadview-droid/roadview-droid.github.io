@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RUN2X - 기타</title>
+
+<!-- ★ 탭 아이콘(파비콘) 변경 코드 추가 ★ -->
+<link rel="icon" type="image/png" href="logo.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
@@ -220,6 +224,7 @@
     });
 
     async function loadLogs() {
+      // 기타 게시판은 최신 글이 위에 오도록 내림차순(desc) 유지
       const q = query(collection(db, "etcLogs"), orderBy("timestamp", "desc"));
       const querySnapshot = await getDocs(q);
       const container = document.getElementById("logsContainer");
